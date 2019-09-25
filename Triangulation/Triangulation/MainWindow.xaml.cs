@@ -34,6 +34,7 @@ namespace Triangulation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            mycoordinates.Clear();
             //Vertex myvertex = new Vertex();
             //myvertex.X = 10;
             //myvertex.Y = 15;
