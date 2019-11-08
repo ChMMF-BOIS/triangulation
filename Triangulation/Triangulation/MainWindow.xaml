@@ -5,31 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Triangulation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="556.381" Width="1091.231">
+        Title="MainWindow" Height="821.381" Width="1641.831">
     <Grid Margin="0,0,0.4,-0.6">
+        <!--<Border BorderBrush="Black" BorderThickness="1" Margin="700,300,192,24">-->
+        <Viewbox Name="MainViewBox" Visibility="Visible" Margin="667,292,307.8,46.6" Stretch="Uniform" >
+            <Canvas Name="MainCanvas" Width="431" Height="300" Background="#FFFFFE" 
+                        Margin="-0.8,-0.8,-1.4,-1"  Visibility="Visible" HorizontalAlignment="Center" MouseWheel="canvas_MouseWheel">
+            </Canvas>
+        </Viewbox>
+
+        <!--</Border>-->
         <Button HorizontalAlignment="Left" Margin="197,269,0,0" VerticalAlignment="Top" Width="80" Click="Button_Click" Content="Read vertexes" Height="25"/>
-        <TextBlock Text="a11" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="646,59,0,0" Height="20" Width="20" />
-        <TextBox x:Name ="a11TextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="620,83,0,0" Text="0" Width="72"/>
+        <Button HorizontalAlignment="Left" Margin="297,269,0,0" VerticalAlignment="Top" Width="80" Click="Reset_Click" Content="Reset" Height="25"/>
+        <TextBlock Text="a11" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="78,339,0,0" Height="20" Width="20" />
+        <TextBox x:Name ="a11TextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="51,363,0,0" Text="1" Width="72"/>
         <DataGrid x:Name="coordinates" HorizontalAlignment="Left" Height="227" Margin="44,21,0,0" VerticalAlignment="Top" Width="233"/>
-        <TextBlock Text="a22" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="739,59,0,0" Height="20" Width="24"/>
-        <TextBox x:Name ="a22TextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="712,83,0,0" Text="0" Width="74"/>
-        <TextBlock Text="d" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="832,59,0,0" Width="16"/>
-        <TextBox x:Name ="dTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="806,83,0,0" Text="0" Width="74"/>
-        <TextBlock Text="f" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="930,59,0,0" Width="10" Height="20" />
-        <TextBox x:Name ="fTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="904,83,0,0" Text="0" Width="71"/>
-        <TextBlock Text="h" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="646,115,0,0" Width="6" Height="20"/>
-        <TextBox x:Name ="hTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="620,139,0,0" Text="0" Width="72"/>
-        <TextBlock Text="L" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="646,171,0,0" Width="6"/>
-        <TextBox x:Name ="LTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="620,195,0,0" Text="0" Width="72"/>
-        <TextBlock Text=" - max area of triangle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="712,139,0,0" Height="18" Width="127"/>
-        <TextBlock Text=" - min angle of triangulation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="712,195,0,0" Height="18" Width="155"/>
+        <TextBlock Text="a22" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="170,339,0,0" Height="20" Width="24"/>
+        <TextBox x:Name ="a22TextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="143,363,0,0" Text="1" Width="74"/>
+        <TextBlock Text="d" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="263,339,0,0" Width="16"/>
+        <TextBox x:Name ="dTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="238,363,0,0" Text="1" Width="74"/>
+        <TextBlock Text="f" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="361,339,0,0" Width="10" Height="20" />
+        <TextBox x:Name ="fTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="335,363,0,0" Text="1" Width="71"/>
+        <TextBlock Text="h" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="78,395,0,0" Width="6" Height="20"/>
+        <TextBox x:Name ="hTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="51,419,0,0" Text="0,1" Width="72"/>
+        <TextBlock Text="L" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="78,451,0,0" Width="6"/>
+        <TextBox x:Name ="LTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="51,475,0,0" Text="30" Width="72"/>
+        <TextBlock Text=" - max area of triangle" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="143,419,0,0" Height="18" Width="127"/>
+        <TextBlock Text=" - min angle of triangulation" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="143,475,0,0" Height="18" Width="155"/>
         <TextBlock Text="Vertexes" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="44,1,0,0" Height="20" Width="46" RenderTransformOrigin="-1.325,0.643"/>
         <DataGrid x:Name="boundariesGrid" HorizontalAlignment="Left" Height="227" Margin="327,21,0,0" VerticalAlignment="Top" Width="233"/>
         <TextBlock Text="Boundaries" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="327,1,0,0" Height="20" Width="64" RenderTransformOrigin="-1.325,0.643"/>
 
-        <Button HorizontalAlignment="Left" Margin="950,269,0,0" VerticalAlignment="Top" Width="80" Click="Triangulate_Click" Content="Triangulate" Height="25"/>
-        <DataGrid x:Name="results" HorizontalAlignment="Left" Height="227" Margin="670,289,0,0" VerticalAlignment="Top" Width="233"/>
-        <TextBlock Text="Results" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="670,269,0,0" Height="20" Width="46" RenderTransformOrigin="-1.325,0.643"/>
+        <Button HorizontalAlignment="Left" Margin="459,609,0,0" VerticalAlignment="Top" Width="80" Click="Triangulate_Click" Content="Triangulate" Height="25"/>
+        <DataGrid x:Name="results" HorizontalAlignment="Left" Height="227" Margin="618,30,0,0" VerticalAlignment="Top" Width="262"/>
+        <TextBlock Text="Results" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="618,10,0,0" Height="20" Width="46" RenderTransformOrigin="-1.325,0.643"/>
+        <DataGrid x:Name="resultsTriangles" HorizontalAlignment="Left" Height="227" Margin="914,30,0,0" VerticalAlignment="Top" Width="275"/>
+        <TextBlock Text="Results triangles" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="915,10,0,0" Height="20" Width="93" RenderTransformOrigin="-1.325,0.643"/>
+        <DataGrid x:Name="resultsBoundaries" HorizontalAlignment="Left" Height="227" Margin="1209,30,0,0" VerticalAlignment="Top" Width="118"/>
+        <TextBlock Text="Results boundaries" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="1211,10,0,0" Height="20" Width="103" RenderTransformOrigin="-1.325,0.643"/>
+        <StatusBar HorizontalAlignment="Left" Height="51" Margin="718,732,0,0" VerticalAlignment="Top" Width="471">
+            <TextBlock Name="ElementId" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        </StatusBar>
 
     </Grid>
 </Window>

@@ -61,6 +61,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DrawableTriangle.cs" />
+    <Compile Include="KE.cs" />
+    <Compile Include="ME.cs" />
+    <Compile Include="MySubSegment.cs" />
+    <Compile Include="PE.cs" />
+    <Compile Include="QE.cs" />
+    <Compile Include="RE.cs" />
+    <Compile Include="Triangle.cs" />
+    <Compile Include="Triangulator.cs" />
+    <Compile Include="MyVertex.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +109,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
