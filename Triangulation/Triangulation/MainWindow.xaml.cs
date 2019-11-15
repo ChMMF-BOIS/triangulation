@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -222,7 +222,7 @@ namespace Triangulation
                 //Етап 3
                 for (int q = 0; q < 3; q++)
                 {
-                    //trinangle[q] це номер вузла елемента
+                    //triangle[q] це номер вузла елемента
                     for (int w = 0; w < 3; w++)
                     {
                         A[triangle[q]][triangle[w]] += ke.Ke[q][w] + me.Me[q][w];
@@ -266,6 +266,9 @@ namespace Triangulation
             }
             //Запис у файл A,b
             print(A, b);
+            //Етап 3-2
+            var u = GausseMethod(nodeNumber, A, b);
+            printNonFormatted(CT, u, "results.txt");
         }
         //Обчислення довжини сегмента
         double GetLength(double[] i, double[] j)
@@ -414,40 +417,40 @@ namespace Triangulation
                 aElementWidth = precision + Math.Max(AMinElementLength, AMaxElementLength),
                 bElementWidth = precision + Math.Max(bMinElementLength, bMaxElementLength);
             //перша стрічка
-            string firstline = new string(' ', leadingSpacesWidth+1);
+            string firstline = new string(' ', leadingSpacesWidth + 1);
             for (int i = 0; i < b.Length; i++)
             {
                 //firstline += String.Format("{0:d" + (aElementWidth+1).ToString() + "}{1}", i, new string(' ', elementSpaces));
-                firstline += String.Format(new string(' ', aElementWidth + 1 - i.ToString().Count())+"{0:d}{1}", i, new string(' ', elementSpaces));
+                firstline += String.Format(new string(' ', aElementWidth + 1 - i.ToString().Count()) + "{0:d}{1}", i, new string(' ', elementSpaces));
             }
             //друга стрічка
-            string secondline = new string(' ', leadingSpacesWidth+1);
+            string secondline = new string(' ', leadingSpacesWidth + 1);
             for (int i = 0; i < b.Length; i++)
             {
-                secondline += String.Format("{0}{1}", new string('-', aElementWidth+1), new string(' ', elementSpaces));
+                secondline += String.Format("{0}{1}", new string('-', aElementWidth + 1), new string(' ', elementSpaces));
             }
             //всі інші стрічки 6:00.00
             string otherline = "{0:d" + leadingSpacesWidth.ToString() + "}|";
             for (int i = 0; i < b.Length; i++)
             {
-                otherline += 
-                    "{" + (i + 1).ToString() + "," 
-                    +(aElementWidth+1).ToString()+ ":"+new string('0', aElementWidth - precision) + "." + new string('0', precision - 1) + "}"
+                otherline +=
+                    "{" + (i + 1).ToString() + ","
+                    + (aElementWidth + 1).ToString() + ":" + new string('0', aElementWidth - precision) + "." + new string('0', precision - 1) + "}"
                     + new string(' ', elementSpaces);
             }
-            otherline += "|{"+(b.Length + 1).ToString()+","
-                 + (bElementWidth+1).ToString() + ":" + new string('0', bElementWidth - precision) + "." + new string('0', precision - 1) + "}" +
-                "|{" + (b.Length + 2).ToString()+"}";
+            otherline += "|{" + (b.Length + 1).ToString() + ","
+                 + (bElementWidth + 1).ToString() + ":" + new string('0', bElementWidth - precision) + "." + new string('0', precision - 1) + "}" +
+                "|{" + (b.Length + 2).ToString() + "}";
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\Matrixes\Ab.txt", false))
             {
                 file.WriteLine(firstline);
                 file.WriteLine(secondline);
-                for(int i = 0; i < b.Length; i++)
+                for (int i = 0; i < b.Length; i++)
                 {
                     var argumentsRow = new object[b.Length + 3];
                     argumentsRow[0] = i;
-                    for(int j = 1; j < b.Length + 1; j++)
+                    for (int j = 1; j < b.Length + 1; j++)
                     {
                         argumentsRow[j] = A[i][j - 1];
                     }
@@ -457,6 +460,87 @@ namespace Triangulation
                 }
                 file.WriteLine(secondline);
                 file.WriteLine(firstline);
+            }
+        }
+        //Метод Гаусса
+        public static double[] GausseMethod(int n, double[][] A, double[] b)
+        {
+            double[] x = new double[n];
+            double[][] mas = (double[][])A.Clone();
+
+
+            for (int k = 0; k < n - 1; k++)
+            {
+                int m = k;
+                for (int i = m + 1; i < n; i++)
+                {
+                    if (Math.Abs(mas[i][k]) > Math.Abs(mas[m][k]))
+                    {
+                        m = i;
+                    }
+                }
+
+                if (m != k)
+                {
+                    if (mas[m][k] == 0)
+                    {
+                        throw new Exception("Infinite number of solutions");
+                    }
+                    else
+                    {
+                        double temp = b[k];
+                        b[k] = b[m];
+                        b[m] = temp;
+
+                        for (int j = k; j < n; j++)
+                        {
+                            double smt = mas[k][j];
+                            mas[k][j] = mas[m][j];
+                            mas[m][j] = smt;
+                        }
+                    }
+                }
+
+                for (int i = k + 1; i < n; i++)
+                {
+                    double Mik = -mas[i][k] / mas[k][k];
+                    b[i] += Mik * b[k];
+                    for (int j = k; j < n; j++)
+                    {
+                        mas[i][j] += Mik * mas[k][j];
+                    }
+                }
+            }
+
+            if (mas[n - 1][n - 1] == 0)
+            {
+                throw new Exception("Infinite number of solutions");
+            }
+
+            x[n - 1] = b[n - 1] / mas[n - 1][n - 1];
+            for (int k = n - 2; k > -1; k--)
+            {
+                x[k] = b[k];
+                for (int j = k + 1; j < n; j++)
+                {
+                    x[k] -= mas[k][j] * x[j];
+                }
+                x[k] /= mas[k][k];
+            }
+
+            return x;
+        }
+        //Виведення результатів
+        private void printNonFormatted(double[][] CT, double[] u, string filename)
+        {
+            string lineFormat = "{0}  {1}  {2}";
+
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\Matrixes\" + filename, false))
+            {
+                for (int i = 0; i < u.Length; i++)
+                {
+                    file.WriteLine(String.Format(lineFormat, CT[i][0], CT[i][1], u[i]));
+                }
             }
         }
 
